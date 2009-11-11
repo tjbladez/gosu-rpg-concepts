@@ -1,49 +1,41 @@
+require 'ruby-debug'
 class Map
   attr_reader :width, :height
+  attr_accessor :tiles
+  KEY_TILE_MAP = {
+    '.'  => 0,
+    'x'  => 1,
+    '-'  => 2,
+    '|'  => 3,
+    '/'  => 4,
+    '\\' => 5,
+    '<'  => 6,
+    '>'  => 7 }
 
   def initialize(window, filename)
     @tileset = Gosu::Image.load_tiles(window, 'resources/tileset_2.png', 16, 16, true)
-    lines = File.readlines(filename).map{|line| line.chop }
-    @height = lines.size
-    @width = lines[0].size
-    @tiles = Array.new(@width) do |x|
-      Array.new(@height) do |y|
-        case lines[y][x,1]
-        when '.'
-          0
-        when 'x'
-          1
-        when '-'
-          2
-        when '|'
-          3
-        when '/'
-          4
-        when '\\'
-          5
-        when '<'
-          6
-        when '>'
-          7
-        else
-          0
-        end
-      end
-    end
+    self.tiles = []
+    populate_tiles(filename)
   end
 
   def draw(screen_x, screen_y)
-    @height.times do |y|
-      @width.times do |x|
-        tile = @tiles[x][y]
-        if tile
-          # Draw the tile with an offset (tile Gosu::Images have some overlap)
-          # Scrolling is implemented here just as in the game objects.
-          @tileset[tile].draw(x * 16 - screen_x - 1, y * 16 - screen_y - 1, 0)
-        end
+    @tiles.each_with_index do |row_array, y|
+      row_array.each_with_index do |col, x|
+        @tileset[col].draw(x * 16 - screen_x - 1, y * 16 - screen_y -1, 0)
       end
     end
   end
 
+private
+  def populate_tiles(filename)
+    lines = File.readlines(filename).map{|line| line.chop }
+     lines.each do |line|
+       tile = []
+       line.each_char do |char|
+         tile << KEY_TILE_MAP[char]
+       end
+       tiles << tile
+     end
+  end
 
 end
