@@ -12,9 +12,9 @@ class Player
   def update(direction)
     case direction
     when :left
-      @x -= 10
+      5.times { @x-= 1 if would_fit?(-1, 0) }
     when :right
-      @x += 10
+      5.times { @x+= 1 if would_fit?(1, 0) }
     when :up
       5.times { @y-= 1 if would_fit?(0, -1) }
     when :down
@@ -25,6 +25,6 @@ class Player
   end
 
   def would_fit?(x,y)
-    !@map.solid?(@x + x, @y + y) && !@map.solid?(@x+y, @y + y - 1)
+    !@map.solid?(@x + x, @y + y)
   end
 end

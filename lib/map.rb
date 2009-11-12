@@ -36,11 +36,12 @@ class Map
   end
 
   def solid?(x,y)
+    puts "x #{x}, y #{y} "
     cross_borders?(x,y)
   end
 
   def cross_borders?(x,y)
-    y < 0
+    y < 0 or x < 0
   end
 
 private
