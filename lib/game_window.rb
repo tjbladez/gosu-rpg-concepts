@@ -6,7 +6,7 @@ class GameWindow < Gosu::Window
     self.caption = "Adventure"
     @map = Map.new(self, 'resources/map.txt')
     self.x = self.y = 0
-    @player = Player.new(self, 0, 0)
+    @player = Player.new(self, 224, 32)
   end
 
 
