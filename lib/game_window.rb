@@ -16,7 +16,6 @@ class GameWindow < Gosu::Window
     direction = :up if button_down? Gosu::Button::KbUp
     direction = :down if button_down? Gosu::Button::KbDown
     @player.update(direction)
-
     self.x = [[@player.x - 300, 0].max, @map.width * 50 - 640].min
     self.y = [[@player.y - 220, 0].max, @map.height * 50 - 480].min
   end
