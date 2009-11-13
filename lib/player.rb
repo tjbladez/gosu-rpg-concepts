@@ -5,6 +5,7 @@ class Player
     @map = window.map
     @img = Gosu::Image.load_tiles(window, "resources/test2.png", 16,  16, false)
     @cur_img = @img.first
+    @facing = nil
   end
   def draw(x, y)
     @cur_img.draw(@x - x - 1, @y - y - 1, 1, 1)
@@ -12,13 +13,17 @@ class Player
   def update(direction)
     case direction
     when :left
-      @x-= 1 if would_fit?(-1, 0, 0, 0) && would_fit?(-1, 0, 0, 15)
+      5.times { @x-= 1 if would_fit?(-1, 0, 0, 0) && would_fit?(-1, 0, 0, 15) }
+      @facing = :left
     when :right
-      @x+= 1  if would_fit?(1, 0, 15, 0) && would_fit?(1, 0, 15, 15)
+      5.times { @x+= 1  if would_fit?(1, 0, 15, 0) && would_fit?(1, 0, 15, 15) }
+      @facing = :right
     when :up
-      @y-= 1 if would_fit?(0, -1, 15, 0) && would_fit?(0, -1, 0, 0)
+      5.times { @y-= 1 if would_fit?(0, -1, 15, 0) && would_fit?(0, -1, 0, 0) }
+      @facing = :up
     when :down
-      @y+= 1 if would_fit?(0, 1, 15, 15) && would_fit?(0, 1, 0, 15)
+      5.times { @y+= 1 if would_fit?(0, 1, 15, 15) && would_fit?(0, 1, 0, 15) }
+      @facing = :down
     else
       nil
     end

@@ -3,23 +3,25 @@ class Map
   attr_reader :width, :height
   attr_accessor :tile_definitions, :tiles
   KEY_TILE_MAP = {
-    '.'  => 0,
-    'x'  => 1,
-    '-'  => 2,
-    '|'  => 3,
-    '/'  => 4,
-    '\\' => 5,
-    '<'  => 6,
-    '>'  => 7,
-    '+'  => 8,
-    '['  => 13,
-    ']'  => 14,
-    '{'  => 11,
-    '}'  => 12
+    '.'  => { :index => 0, :zorder => 0 },
+    'x'  => { :index => 1, :zorder => 0 },
+    '-'  => { :index => 2, :zorder => 0 },
+    '|'  => { :index => 3, :zorder => 0 },
+    '/'  => { :index => 4, :zorder => 0 },
+    '\\' => { :index => 5, :zorder => 0 },
+    '<'  => { :index => 6, :zorder => 0 },
+    '^'  => { :index => 16, :zorder => 1, :prereq => 1 },
+    '>'  => { :index => 7, :zorder => 0 },
+    '+'  => { :index => 8, :zorder => 0 },
+    '['  => { :index => 13, :zorder => 0, :prereq => 1 },
+    ']'  => { :index => 14, :zorder => 2, :prereq => 1 },
+    '{'  => { :index => 11, :zorder => 0 },
+    '}'  => { :index => 12, :zorder => 0 },
+    '$'  => { :index => 15, :zorder => 1, :prereq => 1}
     }
 
   def initialize(window, filename)
-    @tileset = Gosu::Image.load_tiles(window, 'resources/tileset_5.png', 16, 16, true)
+    @tileset = Gosu::Image.load_tiles(window, 'resources/tileset_6.png', 16, 16, true)
     lines = File.readlines(filename).map{|line| line.chop }
     @width = lines[0].size
     @height = lines.size
@@ -37,12 +39,8 @@ class Map
       row_array[horizontal_visibility_range].each_with_index do |col, x|
         x_position = (x+horizontal_range_offset) * 16  - screen_x
         y_position = (y+vertical_range_offset) * 16 - screen_y
-        if ([13, 14].include?(col))
-          @tileset[1].draw(x_position, y_position, 0)
-          @tileset[col].draw(x_position, y_position, 2)
-        else
-          @tileset[col].draw(x_position, y_position, 0)
-        end
+        @tileset[col[:prereq]].draw(x_position, y_position, 0) if col[:prereq]
+        @tileset[col[:index]].draw(x_position, y_position, col[:zorder])
       end
     end
   end
@@ -72,7 +70,7 @@ private
   def create_tiles
     tile_definitions.each_with_index do |row_array, y|
       row_array.each_with_index do |col, x|
-        self.tiles << Tile.new(x*16, y*16, col)
+        self.tiles << Tile.new(x*16, y*16, col[:index])
       end
     end
   end

@@ -1,7 +1,7 @@
 class Tile
   attr_reader :type
   attr_accessor :x, :y, :x_range, :y_range
-  SOLID_TILES = (2..8).to_a
+  SOLID_TILES = (2..8).to_a + [13, 15]
 
   def initialize(x, y, type)
     self.x, self.y = x, y
