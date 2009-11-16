@@ -9,22 +9,23 @@ class Fireball
      :up => @tileset.last(2)
      }
    @movements = {
-     :down => [0, 2],
-     :right => [2, 0],
-     :left => [-2, 0],
-     :up => [0, -2]
+     :down => [0, 7],
+     :right => [7, 0],
+     :left => [-7, 0],
+     :up => [0, -7]
    }
    @direction = direction
    @x, @y = x, y
  end
 
- def draw
-   @sprites[@direction][rand(2)].draw(@x, @y, 1, 1)
+ def draw(x,y)
+   @sprites[@direction][rand(2)].draw(@x - x, @y - y, 1, 1)
    update
  end
 
  def update
    x_inc, y_inc = *@movements[@direction]
-   @x, @y = @x + x_inc, @y + y_inc
+   @x += x_inc
+   @y += y_inc
  end
 end

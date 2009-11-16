@@ -23,11 +23,14 @@ class GameWindow < Gosu::Window
 
   def draw
     @map.draw x, y
-    @player.draw x,y
-    @player.spells.each {|spell| spell.draw }
+    @player.draw x, y
+    @player.spells.each {|s| s.draw(x,y) }
   end
 
   def button_down(id)
     close if id == Gosu::KbEscape
+  end
+  def need_redraw?
+    false
   end
 end
