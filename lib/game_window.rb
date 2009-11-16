@@ -15,6 +15,7 @@ class GameWindow < Gosu::Window
     direction = :right if button_down? Gosu::Button::KbRight
     direction = :up if button_down? Gosu::Button::KbUp
     direction = :down if button_down? Gosu::Button::KbDown
+    @player.cast_spell if button_down? Gosu::Button::KbSpace
     @player.update(direction)
     self.x = [[@player.x - 300, 0].max, @map.width * 50 - 640].min
     self.y = [[@player.y - 220, 0].max, @map.height * 50 - 480].min
@@ -23,6 +24,7 @@ class GameWindow < Gosu::Window
   def draw
     @map.draw x, y
     @player.draw x,y
+    @player.spells.each {|spell| spell.draw }
   end
 
   def button_down(id)

@@ -1,9 +1,9 @@
 class Processor
   class << self
-    attr_accessor :window
+    attr_accessor :game_window
     def new
-      @window = GameWindow.new
-      @window.show
+      @game_window = GameWindow.new
+      @game_window.show
     end
 
     def run

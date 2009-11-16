@@ -1,17 +1,23 @@
 class Player
-  attr_reader :x, :y
+  attr_reader :x, :y, :spells
   def initialize(window, x, y)
     @x, @y = x, y
     @map = window.map
     right = Gosu::Image.load_tiles(window, "resources/char_right_2.png", 16, 16, false)
     down = Gosu::Image.load_tiles(window, "resources/char_down_1.png", 16, 16, false)
     left = Gosu::Image.load_tiles(window, "resources/char_left_1.png", 16, 16, false)
+    up = Gosu::Image.load_tiles(window, "resources/char_up_1.png", 16, 16, false)
     @animation_sprites = {:left  => left,
                           :down  => down,
-                          :up    => down,
+                          :up    => up,
                           :right => right}
     @img_index = 0
     @facing = :down
+    @spells = []
+  end
+  def cast_spell
+    fireball = Fireball.new(@facing, x, y)
+    @spells << fireball
   end
   def draw(x, y)
     @animation_sprites[@facing][@img_index].draw(@x - x - 1, @y - y - 1 , 1, 1)
