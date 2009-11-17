@@ -30,7 +30,5 @@ class GameWindow < Gosu::Window
   def button_down(id)
     close if id == Gosu::KbEscape
   end
-  def need_redraw?
-    false
-  end
+
 end

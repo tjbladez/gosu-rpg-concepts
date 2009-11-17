@@ -1,5 +1,5 @@
 class Fireball
- attr_reader :x, :y
+ attr_reader :x, :y, :time_counter
  def initialize(direction, x, y)
    @tileset = Gosu::Image.load_tiles(Processor.game_window, 'resources/fireball.png', 16, 16, false)
    @sprites = {
@@ -16,6 +16,7 @@ class Fireball
    }
    @direction = direction
    @x, @y = x, y
+   @time_counter = 30
  end
 
  def draw(x,y)
@@ -27,5 +28,6 @@ class Fireball
    x_inc, y_inc = *@movements[@direction]
    @x += x_inc
    @y += y_inc
+   @time_counter -= 1
  end
 end
