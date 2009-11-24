@@ -7,8 +7,9 @@ class GameWindow < Gosu::Window
     @monsters = { :eye => []}
     @map = Map.new(self, 'resources/map.txt')
     self.x = self.y = 0
-    @player = Player.new(self, 32, 32)
+    spawn_player
     spawn_monsters
+    @player_info = PlayerInfo.new(self, @player)
   end
 
 
@@ -27,11 +28,13 @@ class GameWindow < Gosu::Window
   def draw
     @map.draw x, y
     @player.draw x, y
-    @player.spells.each {|s| s.draw(x,y) }
     @monsters[:eye].each do |monster|
       monster.draw(x, y)
       monster.spells.each {|s| s.draw(x,y) }
     end
+    @player.spells.each {|s| s.draw(x,y) }
+
+    @player_info.draw
   end
 
   def button_down(id)
@@ -42,5 +45,7 @@ class GameWindow < Gosu::Window
     @monsters[:eye] << Eye.new(self, 304, 16)
     @monsters[:eye] << Eye.new(self, 340, 0)
   end
-
+  def spawn_player
+    @player = Player.new(self, 32, 32)
+  end
 end

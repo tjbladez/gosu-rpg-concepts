@@ -1,5 +1,5 @@
 class Player
-  attr_reader :x, :y, :spells
+  attr_reader :x, :y, :spells, :score, :hp, :mp
   def initialize(window, x, y)
     @x, @y = x, y
     @map = window.map
@@ -11,9 +11,11 @@ class Player
                           :down  => down,
                           :up    => up,
                           :right => right}
-    @img_index = 0
+    @img_index, @score = 0, 0
     @facing = :down
     @spells = []
+    @hp, @mp = 20, 15
+
     @movement = {
       :left  => [[-1, 0],[0, 0, 0, 14]],
       :right => [[1, 0], [14, 0, 14, 14]],
@@ -26,7 +28,7 @@ class Player
     @spells << fireball
   end
   def draw(x, y)
-    @animation_sprites[@facing][@img_index].draw(@x - x - 1, @y - y - 1 , 1, 1)
+    @animation_sprites[@facing][@img_index].draw(@x - x, @y - y, 1, 1)
   end
 
   def update(direction)
@@ -36,7 +38,7 @@ class Player
       x_y = move_instruct.first
       inc_x, inc_y = *x_y
       tar_x_1, tar_y_1, tar_x_2, tar_y_2 = *move_instruct.last
-      5.times do |i|
+      4.times do |i|
         if would_fit?(x_y + [tar_x_1, tar_y_1]) && would_fit?(x_y + [tar_x_2, tar_y_2])
           @x += inc_x
           @y += inc_y
@@ -50,6 +52,21 @@ class Player
     check_spell_existance
   end
 
+  def reduce_hp(amount)
+    @hp -= amount
+  end
+
+  def center
+    [center_x, center_y]
+  end
+
+  def center_x
+    @x + 8
+  end
+
+  def center_y
+    @y + 8
+  end
 private
   def would_fit?(target)
     !@map.solid_at?(@x+ target[0] + target[2], @y + target[1] + target[3])
