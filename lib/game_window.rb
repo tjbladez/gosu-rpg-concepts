@@ -4,7 +4,7 @@ class GameWindow < Gosu::Window
   def initialize
     super(640, 480, false)
     self.caption = "Adventure"
-    @monsters = []
+    @monsters = { :eye => []}
     @map = Map.new(self, 'resources/map.txt')
     self.x = self.y = 0
     @player = Player.new(self, 32, 32)
@@ -21,14 +21,14 @@ class GameWindow < Gosu::Window
     @player.update(direction)
     self.x = [[@player.x - 300, 0].max, @map.width * 50 - 640].min
     self.y = [[@player.y - 220, 0].max, @map.height * 50 - 480].min
-    @eye.update(@player)
+    @monsters[:eye].each { |eye| eye.update(@player) }
   end
 
   def draw
     @map.draw x, y
     @player.draw x, y
     @player.spells.each {|s| s.draw(x,y) }
-    @monsters.each do |monster|
+    @monsters[:eye].each do |monster|
       monster.draw(x, y)
       monster.spells.each {|s| s.draw(x,y) }
     end
@@ -39,7 +39,8 @@ class GameWindow < Gosu::Window
   end
 
   def spawn_monsters
-    @monsters << @eye = Eye.new(self, 304, 16)
+    @monsters[:eye] << Eye.new(self, 304, 16)
+    @monsters[:eye] << Eye.new(self, 340, 0)
   end
 
 end
