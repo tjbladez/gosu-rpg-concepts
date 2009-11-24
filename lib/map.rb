@@ -1,7 +1,9 @@
 require 'ruby-debug'
 class Map
   attr_reader :width, :height
-  attr_accessor :tile_definitions, :tiles
+  attr_accessor :tile_definitions, :solid_tiles
+  SOLID_TILES = (2..8).to_a + [13, 15]
+
   KEY_TILE_MAP = {
     '.'  => { :index => 0, :zorder => 0 },
     'x'  => { :index => 1, :zorder => 0 },
@@ -25,7 +27,7 @@ class Map
     lines = File.readlines(filename).map{|line| line.chop }
     @width = lines[0].size
     @height = lines.size
-    self.tile_definitions, self.tiles = [], []
+    self.tile_definitions, self.solid_tiles = [], []
     populate_tile_definitions(lines)
     create_tiles
   end
@@ -46,10 +48,10 @@ class Map
   end
 
   def solid_at?(x,y)
-    tile = tiles.detect do |tile|
+    solid_tile = solid_tiles.detect do |tile|
       tile.x_range.include?(x) && tile.y_range.include?(y)
     end
-    cross_borders?(x,y) || tile.solid?
+    cross_borders?(x,y) || solid_tile
   end
 
   def cross_borders?(x,y)
@@ -70,7 +72,7 @@ private
   def create_tiles
     tile_definitions.each_with_index do |row_array, y|
       row_array.each_with_index do |col, x|
-        self.tiles << Tile.new(x*16, y*16, col[:index])
+        self.solid_tiles << SolidTile.new(x*16, y*16) if SOLID_TILES.include?(col[:index])
       end
     end
   end
