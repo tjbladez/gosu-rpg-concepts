@@ -22,7 +22,7 @@ class Player
     }
   end
   def cast_spell
-    fireball = Fireball.new(@facing, x, y)
+    fireball = Fireball.new(@facing, @x, @y)
     @spells << fireball
   end
   def draw(x, y)
@@ -46,22 +46,6 @@ class Player
     else
       @img_index = 0
     end
-    # case direction
-    # when :left
-    #   5.times { @x-= 1 if would_fit?(-1, 0, 0, 0) && would_fit?(-1, 0, 0, 14) }
-    #   @facing = :left
-    # when :right
-    #   5.times { @x+= 1  if would_fit?(1, 0, 14, 0) && would_fit?(1, 0, 14, 14) }
-    #   @facing = :right
-    # when :up
-    #   5.times { @y-= 1 if would_fit?(0, -1, 14, 0) && would_fit?(0, -1, 0, 0) }
-    #   @facing = :up
-    # when :down
-    #   5.times { @y+= 1 if would_fit?(0, 1, 14, 14) && would_fit?(0, 1, 0, 14) }
-    #   @facing = :down
-    # else
-    #   @img_index = 0
-    # end
     @img_index = 0 if @img_index == 4
     check_spell_existance
   end
