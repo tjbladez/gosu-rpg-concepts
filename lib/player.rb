@@ -1,5 +1,5 @@
 class Player
-  attr_reader :x, :y, :spells, :score, :hp, :mp
+  attr_reader :x, :y, :spells, :score, :hp, :mp, :exp
   def initialize(window, x, y)
     @x, @y = x, y
     @map = window.map
@@ -15,6 +15,8 @@ class Player
     @facing = :down
     @spells = []
     @hp, @mp = 20, 15
+    @exp = 0
+    @exp_req = { 1 => 1000, 2 => 2500, 3 => 5000, 4 => 11500}
 
     @movement = {
       :left  => [[-1, 0],[0, 0, 0, 14]],
@@ -52,10 +54,20 @@ class Player
     check_spell_existance
   end
 
+  def collect_items!(items)
+    item = items.detect do |item|
+      (item.x - @x).abs < 10 and (item.y - @y).abs < 10
+    end
+    self.send(item.effect_method, item.effect_amount) && items.delete(item) if item
+  end
+
   def reduce_hp(amount)
     @hp -= amount
   end
 
+  def restore_hp(amount)
+    @hp += amount
+  end
   def center
     [center_x, center_y]
   end

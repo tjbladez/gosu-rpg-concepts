@@ -5,11 +5,13 @@ class GameWindow < Gosu::Window
     super(640, 480, false)
     self.caption = "Adventure"
     @monsters = { :eye => []}
+    @items = []
     @map = Map.new(self, 'resources/map.txt')
     self.x = self.y = 0
     spawn_player
     spawn_monsters
-    @player_info = PlayerInfo.new(self, @player)
+    spawn_items
+    spawn_gui
   end
 
 
@@ -20,6 +22,7 @@ class GameWindow < Gosu::Window
     direction = :down if button_down? Gosu::Button::KbDown
     @player.cast_spell if button_down? Gosu::Button::KbSpace
     @player.update(direction)
+    @player.collect_items!(@items)
     self.x = [[@player.x - 300, 0].max, @map.width * 50 - 640].min
     self.y = [[@player.y - 220, 0].max, @map.height * 50 - 480].min
     @monsters[:eye].each { |eye| eye.update(@player) }
@@ -33,7 +36,7 @@ class GameWindow < Gosu::Window
       monster.spells.each {|s| s.draw(x,y) }
     end
     @player.spells.each {|s| s.draw(x,y) }
-
+    @items.each {|i| i.draw(x,y)}
     @player_info.draw
   end
 
@@ -47,5 +50,11 @@ class GameWindow < Gosu::Window
   end
   def spawn_player
     @player = Player.new(self, 32, 32)
+  end
+  def spawn_items
+    @items << Aid.new(self, 288, 96)
+  end
+  def spawn_gui
+    @player_info = PlayerInfo.new(self, @player)
   end
 end
