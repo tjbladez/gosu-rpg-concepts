@@ -7,7 +7,7 @@ class Aid
   end
 
   def draw(x,y)
-    @img.draw_rot(@x - x, @y - y, 1, 25*Math.sin(Gosu::milliseconds / 133.7))
+    @img.draw(@x - x, @y - y, 1)
   end
 
   def effect_method

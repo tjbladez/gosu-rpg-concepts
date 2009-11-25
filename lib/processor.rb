@@ -6,6 +6,9 @@ class Processor
       @game_window.show
     end
 
+    def single_player?
+      true
+    end
     def run
 
     end

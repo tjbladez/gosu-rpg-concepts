@@ -1,8 +1,9 @@
+require 'lib/player_info.rb'
 class Player
-  attr_reader :x, :y, :spells, :score, :hp, :mp, :exp
+  attr_reader :x, :y, :spells, :score, :hp, :mp, :exp, :info
   def initialize(window, x, y)
     @x, @y = x, y
-    @map = window.map
+    @info = PlayerInfo.new(window, self)
     right = Gosu::Image.load_tiles(window, "resources/char_right_2.png", 16, 16, false)
     down = Gosu::Image.load_tiles(window, "resources/char_down_1.png", 16, 16, false)
     left = Gosu::Image.load_tiles(window, "resources/char_left_1.png", 16, 16, false)
@@ -81,7 +82,7 @@ class Player
   end
 private
   def would_fit?(target)
-    !@map.solid_at?(@x+ target[0] + target[2], @y + target[1] + target[3])
+    !Processor.game_window.map.solid_at?(@x+ target[0] + target[2], @y + target[1] + target[3])
   end
   def check_spell_existance
     @spells.reject! do |spell|
