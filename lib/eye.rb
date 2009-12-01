@@ -33,6 +33,14 @@ class Eye
     player.reduce_hp(spell.damage) if spell
   end
 
+  def x_range
+    (@x..@x+16)
+  end
+
+  def y_range
+    (@y..@y+16)
+  end
+
 private
   def horiz_dir(player)
     return unless (y-10..y+10).include?(player.y)

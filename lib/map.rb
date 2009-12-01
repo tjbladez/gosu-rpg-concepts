@@ -27,7 +27,7 @@ class Map
     tile_definitions[vertical_visibility_range].each_with_index do |row_array, y|
       row_array[horizontal_visibility_range].each_with_index do |col, x|
         x_position = (x+horizontal_range_offset) * 16  - screen_x
-        y_position = (y+vertical_range_offset) * 16 - screen_y-
+        y_position = (y+vertical_range_offset) * 16 - screen_y
         zorder = col[:zorder] || 0
         if col[:actor]
           @actors[col[:actor].to_s] ||= []
@@ -44,6 +44,14 @@ class Map
       tile.x_range.include?(x) && tile.y_range.include?(y)
     end
     cross_borders?(x,y) || solid_tile
+  end
+
+  def monster_at?(x, y)
+    monster = @actors['Eye'].detect do |monster|
+      monster.x_range.include?(x) && monster.y_range.include?(y)
+    end
+    @actors['Eye'].delete(monster)
+    monster
   end
 
   def cross_borders?(x,y)

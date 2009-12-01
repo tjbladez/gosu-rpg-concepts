@@ -10,16 +10,17 @@ class GameWindow < Gosu::Window
     self.x = self.y = 0
     draw
     @player = @map.actors['Player'].first if Processor.single_player?
+    @song = Gosu::Song.new(self, 'resources/music/battle.mp3')
+    @song.play(true)
   end
 
 
   def update
-
     direction = :left if button_down? Gosu::Button::KbLeft
     direction = :right if button_down? Gosu::Button::KbRight
     direction = :up if button_down? Gosu::Button::KbUp
     direction = :down if button_down? Gosu::Button::KbDown
-    @player.cast_spell if button_down? Gosu::Button::KbSpace
+    @player.cast_spell if button_down?(Gosu::Button::KbSpace) && @player.cast_ready?
     @player.update(direction)
     items = @map.actors['Aid']
     monsters = @map.actors['Eye']
