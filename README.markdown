@@ -1,4 +1,7 @@
-Gosu-based(http://www.libgosu.org/) RPG game written in Ruby.
+GOSU RPG PROTOTYPE
+==================
+
+[Gosu-based](http://www.libgosu.org/) RPG game written in Ruby.
 
 Currently serves as prove of concept for me for developing games with Gosu.
 Experience is always good.
