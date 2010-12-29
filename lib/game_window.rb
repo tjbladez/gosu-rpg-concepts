@@ -11,8 +11,7 @@ class GameWindow < Gosu::Window
     self.x = self.y = 0
     draw
     @player = @map.actors['Player'].first
-    @song = Gosu::Song.new(self, 'resources/music/battle.mp3')
-    @song.play(true)
+    initialize_music
   end
 
 
@@ -45,5 +44,11 @@ class GameWindow < Gosu::Window
 
   def button_down(id)
     close if id == Gosu::KbEscape
+  end
+
+private
+
+  def initialize_music
+    Gosu::Song.new(self, 'resources/music/battle.mp3').play(true)
   end
 end
