@@ -10,7 +10,7 @@ class GameWindow < Gosu::Window
     @map = Map.new(self, 'resources/map.txt')
     self.x = self.y = 0
     draw
-    @player = @map.actors['Player'].first if Processor.single_player?
+    @player = @map.actors['Player'].first
     @song = Gosu::Song.new(self, 'resources/music/battle.mp3')
     @song.play(true)
   end
