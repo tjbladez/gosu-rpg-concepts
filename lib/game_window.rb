@@ -1,4 +1,5 @@
-require 'ruby-debug'
+require_local($root + '/lib/*.rb')
+
 class GameWindow < Gosu::Window
   attr_reader :map
   attr_accessor :x, :y

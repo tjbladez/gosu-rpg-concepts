@@ -1,3 +1,5 @@
+require_local($root + '/lib/*.rb')
+
 class Processor
   class << self
     attr_accessor :game_window, :menu_window
