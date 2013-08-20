@@ -15,7 +15,7 @@ Following concepts have been implemented:
 * Protagonist collision detection
 * Multi layer static map building
 * Sample enemy
-* Static monster with line of sight detection and spell construction
+  * Static monster with line of sight detection and spell construction
 * Spell reloading time
 * Spell collision detection
 * Sample items (potions etc)
