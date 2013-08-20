@@ -1,4 +1,3 @@
-require 'ruby-debug'
 class MenuWindow < Gosu::Window
 
   def initialize
@@ -14,5 +13,3 @@ class MenuWindow < Gosu::Window
   def update
   end
 end
-
-

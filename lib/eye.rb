@@ -1,3 +1,5 @@
+require_relative 'acid_star'
+
 class Eye
   attr_reader :x, :y, :spells
   def initialize(window, x, y)

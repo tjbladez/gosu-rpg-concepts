@@ -1,18 +1,10 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
-    columnize (0.3.2)
-    gosu (0.7.24)
-    linecache (0.43)
-    ruby-debug (0.10.4)
-      columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.4.0)
-    ruby-debug-base (0.10.4)
-      linecache (>= 0.3)
+    gosu (0.7.48)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   gosu
-  ruby-debug

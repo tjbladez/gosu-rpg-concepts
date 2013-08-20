@@ -1,4 +1,4 @@
-require_local($root + '/lib/*.rb')
+require_relative 'game_window'
 
 class Processor
   class << self
