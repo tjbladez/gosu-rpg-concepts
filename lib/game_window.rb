@@ -1,4 +1,4 @@
-require_local($root + '/lib/*.rb')
+require_relative 'map'
 
 class GameWindow < Gosu::Window
   attr_reader :map

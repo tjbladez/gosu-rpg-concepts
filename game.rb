@@ -1,3 +1,5 @@
-require File.expand_path(File.dirname(__FILE__) + "/config/requires.rb")
+require 'bundler'
+Bundler.require
+require_relative 'lib/processor'
 
 Processor.new

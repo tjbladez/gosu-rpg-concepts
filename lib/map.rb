@@ -1,7 +1,8 @@
-require 'lib/player'
-require 'lib/aid'
-require 'lib/eye'
-require 'ruby-debug'
+require_relative 'player'
+require_relative 'aid'
+require_relative 'eye'
+require_relative 'solid_tile'
+
 class Map
   attr_reader :width, :height, :actors
   attr_accessor :tile_definitions, :solid_tiles

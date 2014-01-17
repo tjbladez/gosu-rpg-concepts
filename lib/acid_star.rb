@@ -1,4 +1,4 @@
-require 'lib/spell.rb'
+require_relative 'spell'
 
 class AcidStar < Spell
   def initialize(direction, x, y)

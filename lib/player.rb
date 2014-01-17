@@ -1,4 +1,6 @@
-require 'lib/player_info.rb'
+require_relative 'player_info'
+require_relative 'fireball'
+
 class Player
   attr_reader :x, :y, :spells, :score, :hp, :mp, :exp, :info, :level, :total_mp, :total_hp
   def initialize(window, x, y)
